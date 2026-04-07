@@ -1,4 +1,4 @@
-package org.example.db;
+package org.example.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,18 +7,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.example.db.Database;
 import org.example.model.Client;
 
-public class ClientService {
-
-    private void validateName(String name) {
-        if (name == null || name.length() < 2 || name.length() > 1000) {
-            throw new IllegalArgumentException("Invalid name");
-        }
-    }
-
+public class ClientDaoServiceImpl implements ClientDaoService {
     public long create(String name) {
-        validateName(name);
 
         String sql = "INSERT INTO client (name) VALUES (?)";
 
@@ -61,8 +54,6 @@ public class ClientService {
     }
 
     public void setName(long id, String name) {
-        validateName(name);
-
         String sql = "UPDATE client SET name = ? WHERE id = ?";
 
         try (Connection conn = Database.getConnection();

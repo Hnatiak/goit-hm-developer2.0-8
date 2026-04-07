@@ -1,15 +1,18 @@
 package org.example;
-import org.example.db.DatabaseQueryService;
+
+import org.example.dao.ClientDaoService;
+import org.example.dao.ClientDaoServiceImpl;
+import org.example.service.ClientService;
+import org.example.service.ClientServiceImpl;
 
 public class App {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
-        DatabaseQueryService service = new DatabaseQueryService();
+        ClientDaoService dao = new ClientDaoServiceImpl();
+        ClientService service = new ClientServiceImpl(dao);
 
-        System.out.println(service.findMaxProjectsClient());
-        System.out.println(service.findLongestProject());
-        System.out.println(service.findMaxSalaryWorker());
-        System.out.println(service.findYoungestEldestWorkers());
-        System.out.println(service.printProjectPrices());
+        long id = service.create("Test Client");
+        System.out.println(service.getById(id));
+        System.out.println(service.listAll());
     }
 }
